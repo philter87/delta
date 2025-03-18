@@ -20,11 +20,11 @@ public class HtmlTag(string tag) : HtmlNode
         }
     }
 
-    public override HtmlBuilder Render(HtmlBuilder htmlBuilder)
+    public override IHtmlBuilder Render(IHtmlBuilder htmlBuilder)
     {
-        htmlBuilder.AddLine($"<{tag}{CreateAttributes()}>");
+        htmlBuilder.Add($"<{tag}{CreateAttributes()}>");
         _children.ForEach(childElement => childElement.Render(htmlBuilder));
-        return htmlBuilder.AddLine($"</{tag}>");
+        return htmlBuilder.Add($"</{tag}>");
     }
     
     private string CreateAttributes()

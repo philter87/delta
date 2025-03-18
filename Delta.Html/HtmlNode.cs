@@ -6,7 +6,7 @@ public abstract class HtmlNode
     public int SiblingIndex { get; set; } = 0;
     public int Depth => Parent?.Depth + 1 ?? 0;
     
-    public abstract HtmlBuilder Render(HtmlBuilder htmlBuilder);
+    public abstract IHtmlBuilder Render(IHtmlBuilder htmlBuilder);
 
     public string Render()
     {

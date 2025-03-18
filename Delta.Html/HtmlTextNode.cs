@@ -1,16 +1,9 @@
 ﻿namespace Delta.Html;
 
-public class HtmlTextNode : HtmlNode
+public class HtmlTextNode(string rawContent) : HtmlNode
 {
-    private readonly string _rawContent;
-
-    public HtmlTextNode(string rawContent)
+    public override IHtmlBuilder Render(IHtmlBuilder htmlBuilder)
     {
-        _rawContent = rawContent;
-    }
-
-    public override HtmlBuilder Render(HtmlBuilder htmlBuilder)
-    {
-        return htmlBuilder.AddLine(_rawContent);
+        return htmlBuilder.Add(rawContent);
     }
 }

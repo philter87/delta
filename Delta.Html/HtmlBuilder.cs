@@ -2,12 +2,12 @@
 
 namespace Delta.Html;
 
-public class HtmlBuilder
+public class HtmlBuilder : IHtmlBuilder
 {
     private readonly StringBuilder _builder = new(128);
-    public HtmlBuilder AddLine(string rawContent)
+    public IHtmlBuilder Add(string content)
     {
-        _builder.Append(rawContent);
+        _builder.Append(content);
         return this;
     }
 
@@ -15,5 +15,4 @@ public class HtmlBuilder
     {
         return _builder.ToString();
     }
-    
 }
