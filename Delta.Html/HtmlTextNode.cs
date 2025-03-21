@@ -6,4 +6,9 @@ public class HtmlTextNode(string rawContent) : HtmlNode
     {
         return htmlBuilder.Add(rawContent);
     }
+
+    public override string ToString()
+    {
+        return rawContent;
+    }
 }

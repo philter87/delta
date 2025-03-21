@@ -15,4 +15,10 @@
       <ProjectReference Include="..\Delta.Html\Delta.Html.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

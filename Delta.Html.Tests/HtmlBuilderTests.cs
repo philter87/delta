@@ -1,6 +1,6 @@
 
 using FluentAssertions;
-using static Delta.Html.Html;
+using static Delta.Html.Tags;
 
 namespace Delta.Html.Tests;
 

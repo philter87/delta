@@ -3,21 +3,22 @@ namespace Delta.Html.Generator;
 
 public static class HtmlCodeGenerator
 {
-    const string FactoryClassName = "Html";
+    const string FactoryClassName = "Tags";
     const string BaseClass = nameof(HtmlTag);
     const string Namespace = "Delta.Html";
 
     public static void Main()
     {
         var sourceCode = $"""
-                          namespace {Namespace};
+                           namespace {Namespace};
 
-                          {AddStaticMethodsToTagsClass(TagsMeta.Tags)}
-                          """;
+                           {AddStaticMethodsToTagsClass(TagsMeta.Tags)}
+                           
+                           {AddTagClasses(TagsMeta.Tags)}
+                           """;
         
-        // {AddTagClasses(TagsMeta.Tags)}
         
-        string outputPath = Path.Combine(Directory.GetCurrentDirectory(), FactoryClassName + ".cs");
+        string outputPath = Path.Combine(Directory.GetCurrentDirectory(),"..", "..", "..", FactoryClassName + ".cs");
 
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
         File.WriteAllText(outputPath, sourceCode);

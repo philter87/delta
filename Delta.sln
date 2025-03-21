@@ -2,8 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.Html", "Delta.Html\Delta.Html.csproj", "{777D369A-D658-4C8A-85F3-6D905266E119}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.Sandbox", "Delta.Sandbox\Delta.Sandbox.csproj", "{00EB88F9-1988-45EA-9AD0-5510A6106962}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.Html.Tests", "Delta.Html.Tests\Delta.Html.Tests.csproj", "{C8B24F42-A7A2-4A6D-8B36-8F99E42A99C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.UI", "Delta.UI\Delta.UI.csproj", "{0A1F95D2-A347-4DA1-93AD-D60ED90D26A8}"
@@ -20,10 +18,6 @@ Global
 		{777D369A-D658-4C8A-85F3-6D905266E119}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{777D369A-D658-4C8A-85F3-6D905266E119}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{777D369A-D658-4C8A-85F3-6D905266E119}.Release|Any CPU.Build.0 = Release|Any CPU
-		{00EB88F9-1988-45EA-9AD0-5510A6106962}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00EB88F9-1988-45EA-9AD0-5510A6106962}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00EB88F9-1988-45EA-9AD0-5510A6106962}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00EB88F9-1988-45EA-9AD0-5510A6106962}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C8B24F42-A7A2-4A6D-8B36-8F99E42A99C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8B24F42-A7A2-4A6D-8B36-8F99E42A99C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8B24F42-A7A2-4A6D-8B36-8F99E42A99C5}.Release|Any CPU.ActiveCfg = Release|Any CPU

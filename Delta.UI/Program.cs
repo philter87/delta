@@ -1,5 +1,5 @@
 using Delta.UI;
-using static Delta.Html.Html;
+using static Delta.Html.Tags;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,32 +19,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+var deltaValueA = new DeltaValue<int>("a", 2);
 
-app.MapGet("/", (HttpContext context) => body()[div()["Hello World"]]
+app.Map("/", (HttpContext context) => body()[
+        div()["Hello World!"],
+        new Delta.UI.Delta(c => div()[
+            "Plus: ", deltaValueA.Value + 2
+        ])
+    ]
     .ToHtml(context));
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
-
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

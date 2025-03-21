@@ -15,6 +15,7 @@ public abstract class HtmlNode
     }
     
     public static implicit operator HtmlNode(string text) => new HtmlTextNode(text);
+    public static implicit operator HtmlNode(int val) => new HtmlTextNode(val+"");
     public static implicit operator HtmlNode(HtmlTagFunc func) => func();
     // public static implicit operator HtmlNode(List<HtmlNode> children) => new HtmlTag("span")[children.ToArray()];
     // public static implicit operator HtmlNode(List<HtmlTag> children) => new HtmlTag("span")[children.ToArray()];

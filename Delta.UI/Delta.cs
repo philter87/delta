@@ -6,25 +6,31 @@ namespace Delta.UI;
 
 public class Delta: HtmlNode
 {
-    public const string DeltaIdAttributeName = "data-delta-id";
+    private const string DeltaIdAttributeName = "data-delta-id";
+    
+    // Id used to identify the delta/element on the client side
     public string Id { get; }
+    
+    // The delta function that will be rendered
     private readonly Func<HttpContext, HtmlTag> _delta;
-    public List<DeltaState> Dependencies { get; set; } = [];
+    
+    // List of DeltaValues that are used in the delta function
+    public List<DeltaValue> DeltaValues { get; set; } = [];
 
     public Delta(Func<HttpContext, HtmlTag> delta)
     {
-        Dependencies = GetDependencies(delta);
+        DeltaValues = GetDeltaValues(delta);
         Id = CreateId(delta.GetMethodInfo());
         _delta = delta;
     }
 
-    private List<DeltaState> GetDependencies(Func<HttpContext, HtmlTag> delta)
+    private List<DeltaValue> GetDeltaValues(Func<HttpContext, HtmlTag> delta)
     {
         if (delta.Target == null) return [];
         return delta.Target.GetType().GetFields()
-            .Where(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(DeltaState<>))
-            .Select(f => (DeltaState?)f.GetValue(delta.Target))
-            .OfType<DeltaState>().ToList();
+            .Where(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(DeltaValue<>))
+            .Select(f => (DeltaValue?)f.GetValue(delta.Target))
+            .OfType<DeltaValue>().ToList();
     }
     
     public override IHtmlBuilder Render(IHtmlBuilder htmlBuilder)
