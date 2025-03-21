@@ -1,12 +1,12 @@
 // ClientState example: 
-__clientState = {
-    "Deltas":[
-        {"Id":"0EM5i4S9","DeltaValueNames":["a"]}
-    ],
-    "DeltaValues":[
-        {"Name":"a","Value":2,"TypeName":"System.Int32"}
-    ]
-};
+// __clientState = {
+//     "Deltas":[
+//         {"Id":"0EM5i4S9","DeltaValueNames":["a"]}
+//     ],
+//     "DeltaValues":[
+//         {"Name":"a","Value":2,"TypeName":"System.Int32"}
+//     ]
+// };
 
 
 async function changeValue(name, value){
@@ -22,6 +22,18 @@ async function changeValue(name, value){
         headers: {"Content-Type": "application/json", "X-Delta": "true"},
         body: JSON.stringify({Deltas: activatedDeltas, DeltaValues: relatedValues})
     });
+
+    let clientActions = await response.json();
+    for(let clientRender of clientActions.Renders){
+
+        let elements = document.querySelectorAll('[data-delta-id="' + clientRender.DeltaId + '"]')
+        if (elements.length === 0) {
+            console.log("The dynamic html with id '" + htmlChange.Id + "' changed by '" + id + "' was not found")
+        }
+        for (let e of elements) {
+            e.outerHTML = clientRender.Html;
+        }
+    }
 }
 
 async function changeDynamicValue(id, value, opts) {

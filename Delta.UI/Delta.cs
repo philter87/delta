@@ -26,19 +26,45 @@ public class Delta: HtmlNode
 
     private List<DeltaValue> GetDeltaValues(Func<HttpContext, HtmlTag> delta)
     {
-        if (delta.Target == null) return [];
-        return delta.Target.GetType().GetFields()
-            .Where(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(DeltaValue<>))
+        
+        return GetDeltaValueFields(delta)
             .Select(f => (DeltaValue?)f.GetValue(delta.Target))
-            .OfType<DeltaValue>().ToList();
+            .OfType<DeltaValue>()
+            .ToList();
     }
     
     public override IHtmlBuilder Render(IHtmlBuilder htmlBuilder)
     {
+        
         return _delta(GetContext(htmlBuilder))
             .With(DeltaIdAttributeName, Id)
             .Render(htmlBuilder);;
     }
+    
+    private List<FieldInfo> GetDeltaValueFields(Func<HttpContext, HtmlTag> delta)
+    {
+        if (delta.Target == null) return [];
+        return delta.Target.GetType().GetFields()
+            .Where(f => f.FieldType.IsGenericType && f.FieldType.GetGenericTypeDefinition() == typeof(DeltaValue<>))
+            .ToList();
+    }
+
+    public string RenderWith(HttpContext context, List<DeltaValue> values)
+    {
+        if(_delta.Target == null) return "";
+        foreach (var field in GetDeltaValueFields(_delta))
+        {
+            var deltaValue = (DeltaValue?) field.GetValue(_delta.Target);
+            if (deltaValue == null) continue;
+            var newDeltValue = values.Find(v => v.Name == deltaValue.Name);
+            if (newDeltValue == null) continue;
+            deltaValue.SetValue(newDeltValue.GetValue());
+        }
+
+        var builder = new HtmlBuilderWithContext(context);
+        return Render(builder).ToString() ?? "";
+    }
+    
     
     public HttpContext? GetContext(IHtmlBuilder htmlBuilder)
     {

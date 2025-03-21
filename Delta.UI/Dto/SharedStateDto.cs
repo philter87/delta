@@ -8,7 +8,12 @@ public class ClientStateDto
     public List<DeltaDto> Deltas { get; set; } = [];
     public List<DeltaValueDto> DeltaValues { get; set; } = [];
     
-    public static ClientStateDto From(HtmlTag rootHtml)
+    public List<string> GetDeltaIds()
+    {
+        return Deltas.Select(d => d.Id).ToList();
+    }
+    
+    public static ClientStateDto CreateInitialState(HtmlTag rootHtml)
     {
         return new ClientStateDto()
         {
@@ -16,7 +21,6 @@ public class ClientStateDto
             DeltaValues = rootHtml.GetDeltaValues().Select(DeltaValueDto.From).ToList()
         };
     }
-    
 }
 
 public class DeltaAction

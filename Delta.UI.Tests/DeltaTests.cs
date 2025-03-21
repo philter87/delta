@@ -26,7 +26,41 @@ public class DeltaTests
         delta.DeltaValues[1].GetValue().Should().Be(3);
         delta.Id.Should().NotBeEmpty();
         var html = delta.Render(Any.HtmlBuilder()).ToString();
-        html.Should().Be($"""<div data-delta-id="{delta.Id}">val3</div>""");
+        html.Should().Be($"<div {Constants.DataDeltaIdWith(delta.Id)}>val3</div>");
+    }
+
+    [Fact]
+    public void Should_RenderWithNewString()
+    {
+        // Arrange
+        var stateA = new DeltaValue<string>("a", "val");
+        var delta = new Delta((c) => div()[
+            stateA.Value
+        ]);
+        
+        // Act
+        var newValue = new DeltaValue<string>("a", "new val");
+        var htmlStr = delta.RenderWith(Any.HttpContext(), [newValue]);
+        
+        // Assert
+        htmlStr.Should().Be($"<div {Constants.DataDeltaIdWith(delta.Id)}>new val</div>");
+    }
+    
+    [Fact]
+    public void Should_RenderWithNewInt()
+    {
+        // Arrange
+        var stateA = new DeltaValue<int>("a", 5);
+        var delta = new Delta((c) => div()[
+            stateA.Value
+        ]);
+        
+        // Act
+        var newValue = new DeltaValue<int>("a", 10);
+        var htmlStr = delta.RenderWith(Any.HttpContext(), [newValue]);
+        
+        // Assert
+        htmlStr.Should().Be($"<div {Constants.DataDeltaIdWith(delta.Id)}>10</div>");
     }
     
 }
